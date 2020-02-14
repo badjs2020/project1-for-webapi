@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .slider-bar{
+      position: absolute;
+      left:50%;
+      top:300px;
+      margin-left:600px;
+      width: 45px;
+      height: 130px;
+      background-color:lightpink;
+    }
+    .w{
+      width: 1200px;
+      margin:10px auto;
+    }
+    .header {
+      height: 150px;
+      background-color: lightsteelblue;
+    }
+
+    .banner {
+      height: 250px;
+      background-color: lightskyblue;
+    }
+
+    .main {
+      height: 1000px;
+      background-color: lightcyan;
+    }
+
+    span {
+      display: block;
+      position: absolute;
+      bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider-bar">
+    <span class="goback">返回顶部</span>
+  </div>
+  <div class="header w">头部区域</div>
+  <div class="banner w">banner区域</div>
+  <div class="main w">主体部分</div>
+
+  <script>
+    //1、获取元素,js是不支持变量名内容有-的
+    var sliderBar = document.querySelector('.slider-bar')
+    var banner=document.querySelector('.banner')
+   //banner.offsetTop 就是被卷去头部大小，一定要写到滚动的外面
+    var bannerTop=banner.offsetTop;
+    var sliderbarTop=sliderBar.offsetTop-bannerTop;
+    //当我们侧边栏固定定位之后应该变化的数值
+    //获取main主体元素
+    var main=document.querySelector('.main');
+    var goBack=document.querySelector('.goback');
+    var mainTop=main.offsetTop;
+
+    //2、页面滚动事件 scroll
+    document.addEventListener('scroll', function () {
+      // console.log(11);
+      //被卷去的头部
+      // console.log(window.pageYOffset);
+      //3、当我们页面被卷去的头部大于等于bannerTop时，
+      //侧边栏就要改为固定定位
+      if(window.pageYOffset>=bannerTop){
+        sliderBar.style.position='fixed';
+        sliderBar.style.top=sliderbarTop+'px';
+      }else{
+        sliderBar.style.position='absolute';
+        sliderBar.style.top='300px'
+      }
+      //4、当我们页面滚动到main盒子，就显示goback模块
+      if(window.pageYOffset>=mainTop){
+        goBack.style.display='block';
+      }else{
+        goBack.style.display='none';
+      }
+    })
+  </script>
+</body>
+
+</html>
